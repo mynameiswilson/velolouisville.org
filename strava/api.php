@@ -21,6 +21,11 @@ function fetch_from_api($url) {
     return $output;
 }
 
+if (!empty($_GET['compid'])):
+    $competition_id = $_GET['compid'];
+    $response['competition_id'] = $competition_id;
+endif;
+
 if (!empty($_GET['segments'])):
     
     $tmp = explode(",",$_GET['segments']);
@@ -58,27 +63,45 @@ if (!empty($_GET['segments'])):
         $response['athletes'] = array();
 
         foreach($response['segments'] as $segment):
+            $i=0;
             foreach($segment['efforts'] as $effort):
-                $i=0;
-                if ($i < sizeof($points)):
+
+
+                if ($i < sizeof($points)-1):
+
                     $exists = false;
                     $athlete_id = $effort['athlete']['id'];
-                    if ( array_key_exists($effort['athlete']['id'],$response['athletes']) ):
-                        $exists = true;
-                        $athlete_id = $effort['athlete']['id'];
-                    endif;
+                    $j = 0;
+                    foreach( $response['athletes'] as $athlete ):
+                        if ($athlete['id'] == $athlete_id):
+                            $exists = true;
+                            $athlete_order = $j;
+                            break;
+                        else:
+                            $j++;
+                        endif;
+                    endforeach;
 
                     if (!$exists):
-                        $response['athletes'][$athlete_id] = array_merge(array("points"=>0),$effort['athlete']);
+                        array_push( $response['athletes'], array_merge(array("points"=>0),$effort['athlete']) );
+                        $athlete_order = sizeof($response['athletes'])-1;
                     endif;
                     
-                    $response['athletes'][$athlete_id]['points'] += $points[$i];
+                    $response['athletes'][$athlete_order]['points'] += $points[$i];
 
                     $i++;
                 endif;    
             
             endforeach;
         endforeach;
+
+
+        function point_sort($a,$b) {
+            return ($a['points'] < $b['points']) ? 1 : -1;
+        }
+
+        usort($response['athletes'],"point_sort");
+
 
         $response['status'] = "OK";
 
