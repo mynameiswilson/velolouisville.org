@@ -1,7 +1,7 @@
 
 var load_data = function() {
 
-    $.getJSON('file://elite_men.json',function(data) {
+    $.getJSON('elite_men.json',function(data) {
         current_data = data;
 
         $('#data tbody, #data thead tr').html('');
