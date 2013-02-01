@@ -1,4 +1,4 @@
-.f32 .flag{display:inline-block;height:32px;width:32px;vertical-align:text-top;line-height:32px;background:url(../../images/flags/flags32.png) no-repeat;}
+.f32 .flag{border:0 !important;display:inline-block;height:32px;width:32px;vertical-align:text-top;line-height:24px;background:url(flags32.png) no-repeat;}
 .f32 ._African_Union(OAS){background-position:0 -32px;}
 .f32 ._Arab_League{background-position:0 -64px;}
 .f32 ._ASEAN{background-position:0 -96px;}
@@ -228,6 +228,7 @@
 .f32 .tz{background-position:0 -7232px;}
 .f32 .ua{background-position:0 -7264px;}
 .f32 .ug{background-position:0 -7296px;}
+.f32 .uk{background-position:0 -2912px;}
 .f32 .us{background-position:0 -7328px;}
 .f32 .uy{background-position:0 -7360px;}
 .f32 .uz{background-position:0 -7392px;}
